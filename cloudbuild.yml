@@ -1,0 +1,48 @@
+# build the docker image in the DriveAudit folder
+steps:
+  # build the docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build', 
+      '-t', 
+      '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}', 
+      '.',
+      "--target","production"
+    ]
+
+  # push the docker image to the container registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}']
+
+  # Specify the region and project id
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['config', 'set', 'run/region', '$LOCATION']
+    env: ['PROJECT_ID=$PROJECT_ID']
+
+
+  #  deploy the docker image to the cloud run service
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', '$PROJECT_ID',
+      '--image','$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}',
+      '--platform', 'managed',
+      "--port","5000",  
+      '--allow-unauthenticated', 
+      '--service-account',"$PROJECT_NUMBER-compute@developer.gserviceaccount.com" 
+    ]
+
+    # update the traffic to the latest revision
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'services', 'update-traffic', '$PROJECT_ID', 
+      '--to-latest', 
+      '--platform', 'managed']
+  
+substitutions:
+  _IMAGE_NAME: "shopping-application:v1"
+  _REPOSITORY: "shopping-application"
+
+options:
+    substitution_option: 'ALLOW_LOOSE'
+    
+  

@@ -1,4 +1,4 @@
-require("dotenv").config({ path: __dirname + "./../../.env" });
+require("dotenv").config("../../.env");
 const envVaribles = process.env;
 
 exports.SENDGRID_API_KEY = envVaribles.SENDGRID_API_KEY;

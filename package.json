@@ -1,5 +1,5 @@
 {
-  "name": "Shop",
+  "name": "shop",
   "version": "1.2.0",
   "description": "Online shop",
   "main": "app.js",
@@ -11,7 +11,7 @@
   "author": "Samuel Maina",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.3",
+    "jest": "^29.4.3",
     "selenium-webdriver": "^4.0.0-beta.4"
   },
   "jest": {
@@ -44,11 +44,9 @@
     "mongoose": "^6.0.5",
     "multer": "^1.4.2",
     "nodemailer": "^6.6.3",
+    "package.json": "^2.0.1",
     "pdfkit": "^0.10.0",
     "sharp": "^0.28.3",
     "twilio": "^3.67.2"
-  },
-  "engines": {
-    "node": "14.17.5"
   }
 }
