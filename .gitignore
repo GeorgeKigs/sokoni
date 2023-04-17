@@ -1,7 +1,7 @@
 
 /src/node_modules/
 .vscode/
-.env
+
 node_modules
-env.json
+
 package-lock.json

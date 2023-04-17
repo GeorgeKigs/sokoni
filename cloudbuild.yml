@@ -26,7 +26,8 @@ steps:
       'run', 'deploy', '$PROJECT_ID',
       '--image','$LOCATION-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE_NAME}',
       '--platform', 'managed',
-      "--port","5000",  
+      "--port","5000", 
+      "--env-vars-file","env.json", 
       '--allow-unauthenticated', 
       '--service-account',"$PROJECT_NUMBER-compute@developer.gserviceaccount.com" 
     ]
