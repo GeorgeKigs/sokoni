@@ -2,7 +2,6 @@ FROM node:16 as base
 RUN apt-get update && apt-get install -y python3
 WORKDIR /shop
 COPY package.json .
-COPY .env .
 # if the test builds correctly 
 # we can spin up the production container
 # FROM base as test
